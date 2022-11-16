@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import { Image} from "semantic-ui-react";
+import Navbar from './Navbar';
 
 export default function Homepage(){
     const APIkey = "E1b82RjagTNq0SEYkFgmoS7XQNY7ay3HgPTmah2d";
@@ -35,14 +35,13 @@ export default function Homepage(){
     },[])
     
     
-    
-    
     return(
-        <div>
+        <>
+            <Navbar/>
             {loading && <div>Please Wait...</div>}
             {error && <div>{error} </div>}
             <img src={data} alt='Nasa'className='image' />
             
-        </div>
+        </>
     )
 }

@@ -1,5 +1,7 @@
 import { createMedia } from "@artsy/fresnel";
 import React from "react";
+import { Link } from "react-router-dom";
+
 import { render } from "react-dom";
 import { Container, Icon, Image, Menu, Sidebar } from "semantic-ui-react";
 
@@ -45,11 +47,6 @@ const NavBarMobile = (props) => {
           <Menu.Item onClick={onToggle}>
             <Icon name="sidebar" />
           </Menu.Item>
-          <Menu.Menu position="right">
-            {rightItems.map((item) => (
-              <Menu.Item {...item} />
-            ))}
-          </Menu.Menu>
         </Menu>
         {children}
       </Sidebar.Pusher>
@@ -58,19 +55,13 @@ const NavBarMobile = (props) => {
 };
 
 const NavBarDesktop = (props) => {
-  const { leftItems, rightItems } = props;
+  const { leftItems,  } = props;
 
   return (
     <Menu fixed="top" inverted>
       {leftItems.map((item) => (
         <Menu.Item {...item} />
       ))}
-
-      <Menu.Menu position="right">
-        {rightItems.map((item) => (
-          <Menu.Item {...item} />
-        ))}
-      </Menu.Menu>
     </Menu>
   );
 };
@@ -93,7 +84,7 @@ class NavBar extends React.Component {
   handleToggle = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const { children, leftItems, rightItems } = this.props;
+    const { children, leftItems } = this.props;
     const { visible } = this.state;
 
     return (
@@ -103,7 +94,6 @@ class NavBar extends React.Component {
             leftItems={leftItems}
             onPusherClick={this.handlePusher}
             onToggle={this.handleToggle}
-            rightItems={rightItems}
             visible={visible}
           >
             <NavBarChildren>{children}</NavBarChildren>
@@ -111,7 +101,7 @@ class NavBar extends React.Component {
         </Media>
 
         <Media greaterThan="mobile">
-          <NavBarDesktop leftItems={leftItems} rightItems={rightItems} />
+          <NavBarDesktop leftItems={leftItems} />
           <NavBarChildren>{children}</NavBarChildren>
         </Media>
       </div>
@@ -120,13 +110,10 @@ class NavBar extends React.Component {
 }
 
 const leftItems = [
-  { as: "a", content: "Home", key: "home" },
-  { as: "a", content: "Users", key: "users" }
+  { as: Link, content: "HOME", key: "home", to:'/' },
+  { as: Link, content: "MARS",key: "mars", to: "/mars" }
 ];
-const rightItems = [
-  { as: "a", content: "Login", key: "login" },
-  { as: "a", content: "Register", key: "register" }
-];
+
 
 
     
@@ -136,7 +123,7 @@ export default function Navbar(){
       <>
         <style>{mediaStyles}</style>
             <MediaContextProvider>
-            <NavBar leftItems={leftItems} rightItems={rightItems}>
+            <NavBar leftItems={leftItems}>
             </NavBar>
         </MediaContextProvider>
       </>
